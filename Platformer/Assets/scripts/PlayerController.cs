@@ -49,9 +49,11 @@ public class PlayerController : MonoBehaviour
             moving = true;
         }
 
-        if (Input.GetKey("w") && isGrounded)
+        if (Input.GetKey("space") && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            moving = true;
+
         }
 
         if(Input.GetKeyUp("a") || Input.GetKeyUp("d") || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
