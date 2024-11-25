@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,13 +18,24 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     public bool moving;
 
-    public Gamemanager gm;
+    //audio variables
+    public AudioSource soundEffects;
+    public AudioClip itemCollect;
+    public AudioClip doorEnter;
+    public AudioClip Footsteps;
+    public AudioClip[] sounds;
+
+    //public Gamemanager gm;
+    public Text scoreText;
+
 
     // Start is called before the first frame update
     void Start()
     {
+            soundEffects = GetComponent<AudioSource>();
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
+            scoreText.text = "Score; " + Scoring.totalScore;
     }
 
     // Update is called once per frame
@@ -78,8 +91,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag.Equals("coin"))
         {
             //score goes up
-            gm.score++;
+            //gm.score++;
+            Scoring.totalScore += 1;
             Destroy(collision.gameObject);
+            scoreText.text = "Score; " + Scoring.totalScore;
         }
     }
 
@@ -89,5 +104,17 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-    }
+
+     if(collision.gameObject.tag.Equals("Door1"))
+        {
+            Debug.Log("change scene");
+            //soundEffects.PlayOneShot(sounds[0], .7f); //play door sound effect
+            SceneManager.LoadScene("EndScene"); //take to new scene
+        }
+
+     if (collision.gameObject.tag.Equals("Door"))
+        {
+            SceneManager.LoadScene("EndScene"); //take to new scene
+        }
+     }
 }
