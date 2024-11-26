@@ -25,8 +25,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip Footsteps;
     public AudioClip[] sounds;
 
-    //public Gamemanager gm;
-    public Text scoreText;
+    public Gamemanager gm;
+    //public Text scoreText;
 
 
     // Start is called before the first frame update
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
             soundEffects = GetComponent<AudioSource>();
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
-            scoreText.text = "Score; " + Scoring.totalScore;
+            //scoreText.text = "Score; " + Scoring.totalScore;
     }
 
     // Update is called once per frame
@@ -91,10 +91,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag.Equals("coin"))
         {
             //score goes up
-            //gm.score++;
-            Scoring.totalScore += 1;
+            gm.score++;
+            //Scoring.totalScore ++;
             Destroy(collision.gameObject);
-            scoreText.text = "Score; " + Scoring.totalScore;
+            //scoreText.text = "Score; " + Scoring.totalScore;
         }
     }
 
