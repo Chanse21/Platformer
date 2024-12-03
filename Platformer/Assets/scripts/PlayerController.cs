@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] sounds;
 
     public Gamemanager gm;
-    //public Text scoreText;
 
 
     // Start is called before the first frame update
@@ -35,7 +34,6 @@ public class PlayerController : MonoBehaviour
             soundEffects = GetComponent<AudioSource>();
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
-            //scoreText.text = "Score; " + Scoring.totalScore;
     }
 
     // Update is called once per frame
@@ -62,7 +60,7 @@ public class PlayerController : MonoBehaviour
             moving = true;
         }
 
-        if (Input.GetKey("space") && isGrounded)
+        if (Input.GetKeyUp(KeyCode.UpArrow) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             moving = true;
@@ -92,9 +90,7 @@ public class PlayerController : MonoBehaviour
         {
             //score goes up
             gm.score++;
-            //Scoring.totalScore ++;
             Destroy(collision.gameObject);
-            //scoreText.text = "Score; " + Scoring.totalScore;
         }
     }
 
@@ -105,16 +101,12 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
 
-     if(collision.gameObject.tag.Equals("Door1"))
+     if(collision.gameObject.tag.Equals("Door"))
         {
             Debug.Log("change scene");
             //soundEffects.PlayOneShot(sounds[0], .7f); //play door sound effect
             SceneManager.LoadScene("EndScene"); //take to new scene
         }
 
-     if (collision.gameObject.tag.Equals("Door"))
-        {
-            SceneManager.LoadScene("EndScene"); //take to new scene
-        }
      }
 }
