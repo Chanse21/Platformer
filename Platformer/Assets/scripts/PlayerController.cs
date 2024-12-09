@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
     public Gamemanager gm;
 
+    public ProjectileBehaviour ProjectilePrefab;
+    public Transform LaunchOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +72,11 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyUp("a") || Input.GetKeyUp("d") || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
         {
             moving = false;
+        }
+
+        if(Input.GetKey("g"))
+        {
+            Instantiate(ProjectilePrefab, LaunchOffset.position, transform.rotation);
         }
 
         anim.SetBool("Ismoving", moving);
