@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     public float jumpForce;
     public float speed;
+    public int direction;
 
     //Ground check
     public bool isGrounded;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
             newPosition.x -= speed;
             newScale.x = -currentScale;
             moving = true;
+            direction = 1;
         }
 
         if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
             newPosition.x += speed;
             newScale.x = currentScale;
             moving = true;
+            direction = 0;
         }
 
         if (Input.GetKeyUp(KeyCode.UpArrow) && isGrounded)
@@ -74,9 +77,17 @@ public class PlayerController : MonoBehaviour
             moving = false;
         }
 
-        if(Input.GetKey("g"))
+        if(Input.GetKeyDown("g"))
         {
-            Instantiate(ProjectilePrefab, ShootingPoint.position, transform.rotation);
+            var bullet = Instantiate(ProjectilePrefab, ShootingPoint.position, transform.rotation);
+            if(direction == 0)
+            {
+                bullet.Speed = bullet.Speed;
+            }
+            if (direction == 1)
+            {
+                bullet.Speed = -bullet.Speed;
+            }
         }
 
         anim.SetBool("Ismoving", moving);
@@ -103,6 +114,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        if(collision.gameObject.tag.Equals("Enemy"))
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene("EndScene");
+        }
+
+
         if (collision.gameObject.tag.Equals("Ground"))
         {
             isGrounded = false;
